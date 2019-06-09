@@ -1,1 +1,1 @@
-[Click me :)](thezapalsky.github.io)
+[Click me :)](https://thezapalsky.github.io)
