@@ -1,0 +1,134 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+<style>
+        body{
+    background-color: dimgrey;}
+table{
+        border-collapse: collapse;
+    margin: 0 auto;
+}
+td{
+        width:20px;
+        height:20px;
+        border: solid 1px;
+}
+
+
+</style>
+<script>
+
+function load(){
+
+
+    a=parseInt(document.getElementById("wysokosc").value);
+    b=parseInt(document.getElementById("szerokosc").value);
+    c=parseInt(document.getElementById("bomby").value);
+    t=document.createElement("table");
+    tab=[];
+    x=0;
+    y=0;
+    
+    a=a+2
+    b=b+2
+        for(i=0;i<a;i++){
+                tab[i]=[];
+                var tr= document.createElement("tr");
+                for(j=0;j<b;j++){
+                        tab[i][j]=0
+                        var td= document.createElement("td");
+                        td.id="k_"+i+"_"+j;
+                        tr.appendChild(td);
+                }
+
+                t.appendChild(tr)
+        }
+        t.id="tabelka";
+        document.body.appendChild(t);
+        
+        blok();
+        for(i=0;i<c;i++){
+        random();}
+        walls();
+        render();
+
+}
+function blok(){
+            //-2
+        for(i=0;i<a;i++){
+            for(j=0;j<b;j++){
+                    if(i==0 || i==a-1 || j==0 || j==b-1)
+                    tab[i][j]="-2"
+        }
+    }
+
+}
+function render(){
+        //wypisz wartosci
+        for(i=0;i<a;i++){
+                for(j=0;j<b;j++)
+                        document.getElementById("k_"+i+"_"+j).innerHTML=tab[i][j];}
+        //kolorki
+         for(i=0;i<a;i++){
+                for(j=0;j<b;j++){
+                        var xxx=document.getElementById("k_"+i+"_"+j);
+                    if(tab[i][j]==-1){
+                        xxx.style.backgroundColor="#FF4500";}
+                    if(tab[i][j]>=0){
+                    xxx.style.backgroundColor="#989898 ";}           
+        }
+    }
+}
+
+function random(){
+    xrandom = parseInt(Math.random()*(a-2))
+    yrandom = parseInt(Math.random()*(b-2))
+    //console.log(xrandom+","+yrandom)
+        if(tab[xrandom][yrandom]==0)
+            tab[xrandom][yrandom] = -1
+        else
+            random();   
+}
+
+function walls(){
+    //bez scian
+    for(i=1;i<a-1;i++){
+        for(j=1;j<b-1;j++){
+            var licznik=0;
+            if(tab[i][j]==0){
+
+                if(tab[i-1][j]==-1){
+                    licznik++;
+                    tab[i][j]=licznik;}
+
+                if(tab[i+1][j]==-1){
+                    licznik++;
+                    tab[i][j]=licznik;}
+
+                if(tab[i][j-1]==-1){
+                    licznik++;
+                    tab[i][j]=licznik;}
+
+                if(tab[i][j+1]==-1){
+                    licznik++;
+                    tab[i][j]=licznik;}
+            }
+        }
+    }
+
+
+
+
+}
+
+
+
+</script>
+</head>
+<body>
+    <input type="number" name="wysokosc" id="wysokosc"><br>
+    <input type="number" name="szerokosc" id="szerokosc"><br>
+    <input type="number" name="bomby" id="bomby"><br>
+    <button id="ok" onclick="load()">OK</button> 
+</body>
+</html>

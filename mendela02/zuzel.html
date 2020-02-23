@@ -1,0 +1,115 @@
+<html>
+<head>
+    <meta charset="utf-8">
+<style>
+p{
+font-size: 20px;
+}
+    
+</style>
+<script>
+function init() {
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d");
+        //wewnetrzny
+        ctx.beginPath();
+        ctx.arc(200,150,50,0.5*Math.PI,1.5*Math.PI);
+        ctx.lineTo(400,100);
+        ctx.arc(400,150,50,1.5*Math.PI,0.5*Math.PI);
+        ctx.strokeStyle = "rgba(0, 0, 100, 255)";
+        ctx.lineTo(200,200);
+        ctx.stroke();
+        //zewnetrzny
+        ctx.beginPath();
+        ctx.arc(150,150,150,0.5*Math.PI,1.5*Math.PI);
+        ctx.lineTo(400,0);
+        ctx.arc(450,150,150,1.5*Math.PI,0.5*Math.PI);
+        ctx.lineTo(150,300);
+        ctx.strokeStyle = "rgba(0, 0,100, 255)";
+        ctx.stroke();
+        //linia
+        ctx.beginPath();
+        ctx.moveTo(300,300);
+        ctx.lineTo(300,200);
+        ctx.strokeStyle = "rgba(0, 100, 0, 255)";
+        ctx.stroke();
+        ctx.strokeStyle = "rgba(0, 0, 0, 255)";
+
+
+}
+var x=300;
+var y=250;
+var r=1;
+press=0;
+var alfa=0;
+var zmiana=5/180*Math.PI
+var licznik=0;
+
+
+function key(){
+        //console.log("dupal")
+
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d"); 
+                    
+        ctx.beginPath();
+        ctx.moveTo(x,y);
+        ctx.lineTo(x+r,y);
+        x=x+r*Math.cos(alfa);
+        y=y+r*Math.sin(alfa);
+        ctx.stroke();
+        ctx.strokeStyle = "rgba(0, 0, 0, 255)";
+        check();
+}
+
+window.onkeydown=function(e){
+        //console.log(e.which);
+        press++;
+        if (press==1){
+                //console.log("dziala")
+                inte=setInterval(key, 10);
+        }
+        if(e.which==65 || e.which==37){
+                //console.log(alfa);
+                alfa=alfa-zmiana 
+        }
+        if(e.which==68 || e.which==39){
+                //console.log("prawo");
+                alfa=alfa+zmiana        
+        }
+
+}
+function check(){
+        var canvas = document.getElementById("canvas");
+        var ctx = canvas.getContext("2d"); 
+
+        var imgData=ctx.getImageData(x,y,1,1)
+        console.log(imgData.data[1])
+        if(imgData.data[2]!=0){
+                alert("u lose!");
+                clearInterval(inte);
+        }
+        if(imgData.data[1]!=0 ){
+            licznik++;
+            dupa=licznik/2;
+            
+            //console.log("score")
+           document.getElementById("licznik").innerHTML ="wynik: "+parseInt(dupa);;     
+        }
+}
+
+
+             
+
+</script>
+</head>
+<body onLoad="init()">
+    <p><br>poruszasz sie za pomocą strzałek (lewo, prawo) lub 'a' i 'd'<br><br>
+    nie wypadnij z trasy<br><br>
+    powodzenia!!!</p>
+<div id="licznik">wynik:</div>
+        <canvas id="canvas" width="600" height="300" style="border:1px solid #000000;" >
+        
+
+</body>          
+</html>

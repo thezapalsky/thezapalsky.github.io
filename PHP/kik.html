@@ -1,0 +1,71 @@
+﻿<html>
+<head>
+    <meta charset="utf-8">
+<style>
+    .kwadrat{
+    }
+
+    #abc{
+        margin:0 auto;
+    }
+</style>
+<script>
+function init(){
+
+   var abc = document.getElementById('abc');
+	var numer=0;
+	
+	
+   for(var i=0;i<3;i++){
+    var row = document.createElement("div");
+    for(var j=0;j<3;j++){
+        var div = document.createElement("div"); 
+        div.style.backgroundColor = "#aaaaaa";
+        div.style.width = "100px"; 
+        div.style.height = "100px";
+        div.style.border = "solid 2px black";
+        div.className = "kwadrat";
+        div.id = "kwadrat_"+numer;
+        row.style.display = "inline-block";
+        row.appendChild(div);
+        numer++;
+        }
+    abc.appendChild(row)    
+   }
+setInterval(wyslij, 2000);
+}
+
+function render()
+{
+	for(var i=0;i<9;i++){
+		var ten_div = document.getElementById('kwadrat_'+i)
+		
+		if(ob[i]=="x")
+			ten_div.style.backgroundImage = "url('x.png')";
+		else if(ob[i]=="o")
+			ten_div.style.backgroundImage = "url('o.png')";
+	}
+}
+function wyslij(){
+
+    var xhttp = new XMLHttpRequest();
+    
+    xhttp.onreadystatechange = function(){
+        if(xhttp.readyState == 4 && xhttp.status == 200){
+            ob = JSON.parse(xhttp.responseText);
+            console.log(ob);
+        }
+    }
+    
+	xhttp.open("GET", "http://zapalski.cba.pl/PHP/3ib.php", true);
+    xhttp.send();
+    render();
+
+}
+
+</script>
+</head>
+<body onLoad="init()">
+    <div id="abc"></div> 
+</body>          
+</html>

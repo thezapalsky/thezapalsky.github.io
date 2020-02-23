@@ -1,0 +1,407 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>zap01</title>
+    <script src="three.js"></script>
+    <script src="myllight.js"></script>
+    <style>
+    </style>
+    <script>
+        window.addEventListener("load", function onLoad() {
+            alert("Welcome!\n\nAby cos widziec najpierw dodaj swiatlo, a pozniej ustaw je za pomoca suwakow x i y\nwyproboj rozne animacje dostepne w kolumnie po prawej stronie\nwcisnij c aby wlaczyc kamere TPC\nsteruj za pomoca jednoktrotnego wcisniecia:\nw - przod\na i d - lewo prawo")
+            //scena
+            var mat_swiatlo;
+            var material;
+            var scene = new THREE.Scene();
+            var tablica = [];
+
+            //kamera perspektywiczna - przeczytaj dokładnie objaśnienia w komentarzach
+
+            var camera = new THREE.PerspectiveCamera(
+                35, // kąt patrzenia kamery (FOV - field of view)
+                4 / 3, // proporcje widoku
+                0.1, // min renderowana odległość
+                10000 // max renderowana odległość
+                );
+
+            var camera2 = new THREE.PerspectiveCamera(
+                35, // kąt patrzenia kamery (FOV - field of view)
+                4 / 3, // proporcje widoku
+                0.1, // min renderowana odległość
+                10000 // max renderowana odległość
+                );
+
+            //renderer wykorzystujący WebGL - działa dość stabilnie na wszystkich najnowszych przeglądarkach
+            //zarówno desktopowych jak mobilnych
+
+            var renderer = new THREE.WebGLRenderer();
+            renderer.autoClear = false;
+
+            // kolor tła - uwaga na prefix 0x a nie #
+
+            renderer.setClearColor(0xABE9F5);
+            //ustalenie rozmiarów renderowanego okna w px (szer, wys)
+
+            var szer = window.innerWidth;
+            var wys = window.innerHeight;
+            renderer.setSize(szer, wys);
+
+
+            var axis = new THREE.AxisHelper(2000);
+            scene.add(axis);
+
+           material = new THREE.MeshPhongMaterial({ side: THREE.DoubleSide, map: THREE.ImageUtils.loadTexture('gfx/grass.png') });
+
+
+            var geom = new THREE.PlaneBufferGeometry(1000, 1000);
+
+            var mesh = new THREE.Mesh(geom, material);
+            scene.add(mesh);
+            mesh.rotateX(Math.PI / 2);
+            //mesh.rotateY(obrot_w_radianach);
+            //mesh.rotateZ(obrot_w_radianach);
+            mesh.material.map.repeat.set(8, 8); //gęstość powtarzania
+            mesh.material.map.wrapS = mesh.material.map.wrapT = THREE.RepeatWrapping; // powtarzanie w obu kierunkach
+            //////////////////////////////////
+            //////model
+            var loader = new THREE.JSONLoader();
+            loader.load('tris.js', function (geometry, mat) {
+                geometry.computeMorphNormals();
+
+                //mat.morphNormals = true;
+
+                var mat_ninja = new THREE.MeshBasicMaterial(
+                           {
+                               map: THREE.ImageUtils.loadTexture("gfx/ralph.png"),
+                               morphTargets: true, //konieczne do animacji
+                               morphNormals: true, //konieczne animacji
+                               specular: 0xffffff,
+                               shininess: 60,
+                               shading: THREE.SmoothShading,
+                               vertexColors: THREE.FaceColors
+                           });
+                mat_swiatlo = new THREE.MeshLambertMaterial(
+                            {
+                                map: THREE.ImageUtils.loadTexture("gfx/ralph.png"),
+                                morphTargets: true, //konieczne do animacji
+                                morphNormals: true, //konieczne animacji
+                                specular: 0xffffff,
+                                shininess: 60,
+                                shading: THREE.SmoothShading,
+                                vertexColors: THREE.FaceColors
+
+                            });
+
+
+
+                //mesh dla modelu musi być typu MorphAnimMesh
+
+                meshModel = new THREE.MorphAnimMesh(geometry, mat_swiatlo);
+                meshModel.name = "ninja";
+                meshModel.rotation.y = 400; // ustaw obrót modelu
+                meshModel.position.y = 50; // ustaw pozycje modelu
+                meshModel.scale.set(2, 2, 2); // ustaw skalę modelu
+
+                //
+
+                scene.add(meshModel);
+
+                
+
+                meshModel.parseAnimations();
+
+                //tutaj dodaję do własnej tablicy tablica animacje modelu
+                //UWAGA: tutaj tworzę też butony do wyboru animacji
+                tablica = [];
+                var id = 0;
+                for (var key in meshModel.geometry.animations) {
+
+                    if (key === 'length' || !meshModel.geometry.animations.hasOwnProperty(key)) continue;
+                    tablica.push(key);
+                    console.log(key)
+                    var ddd = document.createElement("div");
+                    var t = document.createTextNode(key);
+                    ddd.style.border = "1px solid white";
+                    ddd.style.backgroundColor = "gray";
+                    ddd.appendChild(t);
+                    ddd.id = id;
+                    ddd.addEventListener("click", function () { meshModel.playAnimation(tablica[this.id], 5); });
+                    document.getElementById("div1").appendChild(ddd);
+                    id++;
+                }
+                meshModel.playAnimation(tablica[0], 5);
+
+            });
+
+            var meshModel;
+            var clock = new THREE.Clock();
+
+            document.getElementById("add_clones").onclick = function () { klonuj() };
+            function klonuj() {
+                console.log("Aaa");
+                var klony = new THREE.Object3D();
+                for(var i=-1;i<2;i++){
+                    var clone = meshModel.clone();
+                    
+                    clone.position.z = 100 * i;
+                    klony.add(clone);
+                    
+                }
+
+                scene.add(klony);
+                
+            }
+
+            document.getElementById("add_light").onclick = function () { myFunction() };
+            var myLight;
+
+            function myFunction() {
+                myLight = new MyLight(0xffffff).getLight();
+                myLight.position.set(0, 500, 0)
+                scene.add(myLight);
+
+                mat_swiatlo.needsUpdate = true;
+                material.needsUpdate = true;
+            }
+
+            /////////////////////////////////////
+
+            //geometria - obiekt NIE wyświetlany na scenie, ale stanowiący strukturę, która jest
+            //dodawana do kolejnego obiektu - przeczytaj w dokumentacji jego parametry:
+
+
+            //console.log(planets[0].nazwa)
+
+            //mesh - obiekt wyświetlany na scenie
+
+
+            //dodanie renderera do diva
+
+            document.getElementById("div").appendChild(renderer.domElement);
+
+            //pozycja kamery - tu zobacz układ współrzędnych THREEJS:
+
+            camera.position.x = 400;
+            camera.position.y = 100;
+            camera.position.z = 10;
+
+            camera2.position.x = -400;
+            camera2.position.y = 500;
+            camera2.position.z = 10;
+
+            //nakierowanie kamery na punkt (0,0,0) w przestrzeni
+
+            camera.lookAt(mesh.position);
+            camera2.lookAt(mesh.position);
+
+            //kluczowy element - animacja
+
+
+            var checker = false;
+            var do_przodu = false;
+            var w_lewo = false;
+            var w_prawo = false;
+
+            function animateScene() {
+
+
+                //w tym miejscu ustalamy wszelkie zmiany w projekcie (obrót, skalę, położenie obiektów)
+
+                //zmieniająca się wartość czyli rotacja obiektu
+
+                mesh.rotation.y = 0;
+
+                //wykonywanie funkcji bez końca ok 60 fps jeśli pozwala na to wydajność maszyny
+
+                requestAnimationFrame(animateScene);
+
+                //ciągłe renderowanie / wyświetlanie widoku sceny nasza kamerą
+
+                //renderer.render(scene, camera);
+
+                ////////////
+                var delta = clock.getDelta();
+                //console.log(delta) // zobacz czy widać zwiększającą się cyfrę w konsoli
+
+                //aktualizacja wyglądu animacji
+                if (meshModel)
+                    meshModel.updateAnimation(delta * 1000);
+                /////////
+                if (do_przodu) {
+                    
+                    meshModel.updateAnimation(delta * 1000);
+                    meshModel.translateX(-3)
+                }
+                if (w_lewo) {
+                    meshModel.rotation.y += 0.02;
+                }
+                if (w_prawo) {
+                    meshModel.rotation.y -= 0.02;
+                }
+
+                //dobranie proporcji widoku
+                camera.aspect = 4 / 3; // aspect powinien wynikać z proporcji polowy ekranu
+                camera2.aspect = 4 / 3; // aspect powinien wynikać z proporcji polowy ekranu
+                camera.updateProjectionMatrix();
+                camera2.updateProjectionMatrix();
+                // dla kamery 1
+                
+                //dla kamery 2
+                if (checker) {
+                    camera.aspect = 2 / 3; // aspect powinien wynikać z proporcji polowy ekranu
+                    camera2.aspect = 2 / 3; // aspect powinien wynikać z proporcji polowy ekranu
+                    renderer.setViewport(szer / 2, 0, szer / 2, wys);
+                    renderer.render(scene, camera);
+                    renderer.setViewport(0, 0, szer / 2, wys);
+                    renderer.render(scene, camera2);
+
+                    var camVect = new THREE.Vector3(200, 50, 0);
+
+                    var camPos = camVect.applyMatrix4(meshModel.matrixWorld);
+
+                    camera2.position.x = camPos.x;
+                    camera2.position.y = camPos.y;
+                    camera2.position.z = camPos.z;
+
+                    camera2.lookAt(meshModel.position);
+                }
+                else {
+                    renderer.setViewport(0, 0, szer , wys);
+                    renderer.render(scene, camera);
+                }
+
+                
+            }
+
+
+
+            //na koniec jednokrotne wykonanie powyższej funkcji
+
+            animateScene();
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////
+            document.addEventListener("keydown", onKeyDown, false); // naciśnięcie dowolnego klawisza
+            // document.addEventListener("keyup", onKeyUp, false); //zwolnienie dowolnego klawisza
+            var alfa = 1;
+            function onKeyDown(event) {
+
+                var keyCode = event.which; // kod klawisza
+
+                console.log(keyCode);
+
+                switch (keyCode) {
+
+                    case 87:
+                        do_przodu = !do_przodu;
+                        if (do_przodu)
+                            meshModel.playAnimation(tablica[1], 5);
+                        else
+                            meshModel.playAnimation(tablica[0], 5); 
+                        break;
+                    case 65:
+                        w_lewo = !w_lewo;
+                        break;
+                    case 68:
+                        w_prawo = !w_prawo;
+                        break;
+                    case 67:
+                        checker = !checker;
+                        break;
+
+                }
+
+            }
+            //////////////////////////
+
+            /// naprawić to bo kamera byla zle ustawiona plus zrobic plynna camere
+
+
+            //////// suwaki
+            var tb1 = document.getElementById("thumb1");
+            var clicked1 = false;
+            tb1.addEventListener("mousedown", function () {
+                clicked1 = true;
+            });
+            tb1.addEventListener("mousemove", function () {
+                if (clicked1) {
+                    console.log(event.clientX);
+                    tb1.style.left = event.clientX - 10 + "px";
+                }
+            });
+            tb1.addEventListener("mouseup", function () {
+                clicked1 = false;
+            });
+            //////////////////////////
+            var tb4 = document.getElementById("thumb4");
+            var clicked4 = false;
+            tb4.addEventListener("mousedown", function () {
+                clicked4 = true; console.log(event.clientX);
+            });
+            tb4.addEventListener("mousemove", function () {
+                if (clicked4) {
+                    console.log(event.clientX);
+                    var new_x = event.clientX - 10;
+                    tb4.style.left = new_x + "px";
+                    myLight.position.x = new_x;
+                }
+            });
+            tb4.addEventListener("mouseup", function () {
+                clicked4 = false;
+            });
+            ////////////////////////////
+            var tb5 = document.getElementById("thumb5");
+            var clicked5 = false;
+            tb5.addEventListener("mousedown", function () {
+                clicked5 = true; console.log(event.clientX);
+            });
+            tb5.addEventListener("mousemove", function () {
+                if (clicked5) {
+                    console.log(event.clientX);
+                    var new_y = event.clientX - 10;
+                    tb5.style.left = new_y+"px";
+                    myLight.position.y = new_y;
+                }
+            });
+            tb5.addEventListener("mouseup", function () {
+                clicked5 = false;
+            });
+
+
+
+        })
+
+
+
+    </script>
+</head>
+<body>
+    <div id="panel" style="position:fixed">
+
+        <div id="suwak1">
+            <div id="thumb1" style="position:fixed;background-color:red;width:20px;height:20px"></div>
+        </div>
+        <div id="suwak2">
+            <div id="thumb2" style="position:fixed;background-color:green;width:20px;height:20px;top:30px;"></div>
+        </div>
+        <div id="suwak3">
+            <div id="thumb3" style="position:fixed;background-color:blue;width:20px;height:20px;top:50px;"></div>
+        </div>
+        <div id="suwak4">
+            <div id="thumb4" style="position:fixed;background-color:white;width:20px;height:20px;top:70px;color:black">X</div>
+        </div>
+        <div id="suwak5">
+            <div id="thumb5" style="position:fixed;background-color:black;width:20px;height:20px;top:90px;color:white">Y</div>
+        </div>
+    </div>
+    <div style="overflow:hidden" id="div">
+
+    </div>
+
+    
+
+    <div style="position:absolute; top:75px; right:10px;" id="div1"></div>
+    <div style="position:absolute; top:40px; right:10px;" id="add_light">dodaj swiatlo</div>
+    <div style="position:absolute; top:10px; right:10px;" id="add_clones">klonuj</div>
+</body>
+</html>

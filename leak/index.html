@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html> 
+<head> 
+<title>Komis Samochodowy</title> 
+<meta charset="utf-8"> 
+<link rel="stylesheet" type="text/css" href="komis.css"> 
+
+</head>
+<style>
+body, h1
+{
+    margin:0;
+}
+.naglowek { 
+
+    background-color: #45517D;
+    color: white;
+    font-size: 120%;
+    text-align: right;
+    height: 60px;
+} 
+
+.lewy { 
+
+    background-color: #61B2EC;
+    width: 40%;
+    height: 500px;
+    float: left;
+} 
+
+.prawy { 
+
+
+    background-color: #8EC9F2;
+    width: 60%;
+    height: 500px;
+    float: left;
+
+
+
+} 
+
+.stopka { 
+
+    background-color: #45517D;
+    color: white;
+    font-size: 150%;
+    text-align: center;
+    clear: both;
+
+} 
+
+a {
+
+    color: orange;
+
+}
+
+a:visited {
+
+    color: green;
+
+}
+
+table {
+
+    width: 100%;
+
+}
+</style> 
+<body> 
+<div class="naglowek"><h1> SAMOCHODY</h1></div> 
+<div class="lewy"><h2> Wykaz Samochodow </h2> 
+
+<?php 
+
+$connection = @mysql_connect('localhost','root','') or die('error'); 
+
+$db = @mysql_select_db('komis', $connection); 
+
+$wynik = mysql_query("SELECT id,marka,model from samochody; "); 
+
+if(mysql_num_rows($wynik)>0){ 
+
+while ($r = mysql_fetch_assoc($wynik)) { 
+echo 
+'<ul> 
+<li>'.$r['id'].''.$r['marka'].$r['model'].'</li></ul>'; 
+} 
+} 
+mysql_close($connection); 
+?> 
+<h2>Zamowienia </h2> 
+<?php 
+
+$connection = @mysql_connect('localhost','root',''); 
+
+$db = @mysql_select_db('komiss', $connection); 
+
+$wynik = mysql_query("SELECT Samochody_id, Klient FROM zamowienia; "); 
+
+if(mysql_num_rows($wynik)>0){ 
+
+while ($r = mysql_fetch_assoc($wynik)) 
+{ 
+echo "<ul><li>".$r['Samochody_id']." ".$r['Klient']."</li></ul>"; 
+} 
+} 
+mysql_close($connection); 
+?> 
+</div> 
+<div class="prawy"><h2> Pelne Dane Fiat </h2> 
+
+<?php 
+
+$connection = @mysql_connect('localhost','root',''); 
+
+$db = @mysql_select_db('komiss', $connection); 
+
+$wynik = mysql_query('SELECT * FROM samochody WHERE marka = "Fiat";'); 
+
+if(mysql_num_rows($wynik)>0)
+{ 
+while ($r = mysql_fetch_assoc($wynik)) 
+{ 
+echo $r['id']." / ".$r['marka']." / ".$r['model']." / ".$r['rocznik']." / ".$r['kolor']." / ".$r['stan']."<br />"; 
+} 
+    echo "</table>";
+} 
+mysql_close($connection); 
+?> 
+</div> 
+<div class="stopka"> 
+<table>
+<tr> 
+    <td><a href="kwerendy.txt">Kwerendy</a></td><td>AUTOR:**</td><td><img src="obraz.png" alt="Komis samochodowy"/></td> 
+</tr> 
+</table> 
+</div> 
+</body> 
+</html>

@@ -1,0 +1,27 @@
+
+
+    <!DOCTYPE>
+    <html>
+    <head>
+    <script>
+    var s=prompt('wpisz string');
+
+    function maluch(s,min,max){ 
+    var t="";
+    var fs;    
+    for(i=0;i<s.length;i++){
+        if(i%2==0) fs=min; else fs=max;
+        //t+=s[i].fontsize(fs);
+        t+="<span style='font-size:"+fs+"px;'>"+s[i]+"</span>"
+    }
+        return t;
+    }
+    document.write(maluch(s,10,30));
+
+    </script>
+    </head>
+    <body>
+     
+    </body>
+    </html>
+

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<style>
+body, html{
+	margin:0px;
+	height:100%;
+    cursor:none;
+}
+#rama{position: absolute;
+    left:-100%;}
+#a{
+	position: absolute;
+	top:110px;
+	left:100px;
+	background-color:blue;
+	width:100px;
+	height:100px;}
+    
+#cel {
+    position: absolute;
+        pointer-events: none;
+}
+body{
+background-color: 	#888888 ;}
+#licznik{
+background-color: 	#F8F8F8  ;
+border: solid black 2px;
+width: 60px;
+padding:5px;
+}    
+
+</style>
+<script>
+///============= do zrobienia =============
+// KURSOR
+function init(){
+	x=0;
+	czas = 2501
+
+	xxx = document.styleSheets[0].cssRules[1].cssText
+	document.getElementById('licznik').innerHTML="pkt: "+ x;
+	document.getElementById("a").addEventListener("click",function(){
+		x++;
+		//console.log(x)
+		document.getElementById('licznik').innerHTML="pkt: "+ x;
+		document.getElementById("a")
+		a.style.width = 0 + "px";
+		a.style.height = 0 + "px";
+		a.innerHTML = "";
+        clearInterval(xoxo)
+        fotoradar();
+	},false)
+    fotoradar();
+
+
+}
+    
+function render(){
+    a.innerHTML = "<img src='gfx/mikosz.jpg' alt='mikosh' height='180px'  >";
+		var el = document.getElementById("a")
+		// - szerokosc diva !!!
+		var l=parseInt(Math.random() * window.innerWidth)
+		el.style.left= Math.abs( parseInt(l - 240) ) + "px"
+		var m=parseInt(Math.random() * window.innerHeight)
+		el.style.top= Math.abs( parseInt(m - 180) ) + "px"
+
+}    
+
+function myszka(){
+        document.getElementById('cel').style.top= event.clientY + "px";
+        document.getElementById('cel').style.left= event.clientX + "px";
+    }
+function fotoradar(){
+    czas-=100;
+	if (czas<100) alert("gg - WYGRALES!!!");
+    
+xoxo = setInterval(function(){ render() }, czas);
+    
+}
+</script>
+</head>
+<body onload="init()" onmousemove="myszka()">
+    <iframe id="rama" width="420" height="315" src="https://www.youtube.com/embed/1vZ28SAgzKc?rel=0&autoplay=1&loop=1" frameborder="0" allowfullscreen></iframe>
+<div id="a"><img src="gfx/mikosz.jpg" alt="mikosh" height="180px"  ></div>
+    <h1>( ͡° ͜ʖ ͡° ) Mikosz rozrabiaka ( ͡° ͜ʖ ͡° )</h1>
+    Uwaga, wraz z twoim postepem gra przyspiesza...<br /><br />
+<div id="licznik" style="color:red;">AAA</div>
+    <img src="gfx/cel.png"  id="cel" height="50px">
+</body>
+</html>

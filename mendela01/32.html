@@ -1,0 +1,28 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<script>
+		function init(){
+			var time=0
+			document.getElementById("obrazek").style.width = "1096px";
+			document.getElementById("obrazek").style.height = "456px";
+			document.getElementById("obrazek").style.backgroundRepeat="no-repeat";
+			setInterval(function(){
+				if(time%2==0) {
+					document.getElementById("obrazek").style.backgroundImage="url('http://playarena.pl/uf/news_photo/731_441958351_logo_onet.jpg')";
+					time++;
+				}
+				else {
+					document.getElementById("obrazek").style.backgroundImage="url('https://www.targi.krakow.pl/users/media/b_sikora/Interia.jpg')"
+					time++;
+				}
+			},1000)
+		}
+		</script>
+	</head>
+	<body onload="init()">
+		<div id="obrazek">
+
+		</div>
+	</body>
+</html>

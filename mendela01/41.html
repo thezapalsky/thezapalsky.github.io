@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8"/>
+
+	<script>
+function init(){
+var data = new Date();
+var dzien=["niedziala","poniedzialek","wtorek","sroda","czwartek","piatek","sobota"]
+var miesiac=["stycznia","lutego","marca","kwietnia","maja","czerwca","lipca","sierpnia","wrzesnia","pazdziernika","listopada","grudnia"]
+
+if(data.getSeconds()<=9) var sek=("0" + data.getSeconds())
+else var sek = data.getSeconds();
+if(data.getMinutes()<=9) var min=("0" + data.getMinutes())
+else var min = data.getMinutes();
+if(data.getHours()<=9) var godz=("0" + data.getHours())
+else var godz = data.getHours();
+
+document.getElementById("out").innerHTML= dzien[data.getDay()] +" " + data.getDate() + " " + miesiac[data.getMonth()] +" "+data.getFullYear()+ " " + "godzina: " + " " + godz+":"+min+":"+sek;
+
+
+
+}
+</script>
+</head>
+<body onload="init()">
+<div id="out"></div>
+
+
+</body>
+</html>

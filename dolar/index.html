@@ -1,0 +1,78 @@
+<html>
+<head>
+    <meta charset="utf-8">
+<style>
+    iframe{
+        display:none;
+    }  
+
+</style>
+<script>
+// kierunek
+function _Dolar(_x, _y, speed, _img){
+
+    this.x = _x;
+    this.y = _y;
+    this.speed = speed;
+    this.moveX = this.speed;
+    this.moveY = this.speed;
+    this.img = new Image();
+    this.img.src = _img;
+    if(Math.floor((Math.random() * 2)))
+         this.moveX = -this.moveX;
+    if(Math.floor((Math.random() * 2)))
+         this.moveY = -this.moveY;
+
+    this.drawDolar = function() {
+        c.drawImage(this.img, this.x, this.y,24,24)
+        
+    }
+    this.ruszaj = function() {
+        if (this.x<0 || this.x>600-24) {
+            this.moveX = -this.moveX;
+        }
+        if (this.y<0 || this.y>300-24) {
+            this.moveY = -this.moveY;
+        }       
+        this.x = this.x + this.moveX;
+        this.y = this.y + this.moveY;
+ 
+        this.drawDolar();
+    }
+}
+
+function draw(){
+    c.clearRect(0,0,600,300);
+        for (var i= 0;i<dolary.length;i++){
+        dolary[i].ruszaj();
+        //console.log(Math.floor((Math.random() * 2)))
+    }
+}
+
+function new_dolar(){
+        var new_x = 20 + Math.random()*160;
+        var new_y = 20 + Math.random() * 60;
+        var new_speed = Math.round(1 + Math.random()*2);
+        var new_img = "dolar"+Math.round(1 + Math.random()*2)+".png";
+        dolary.push(new _Dolar(new_x, new_y, new_speed, new_img));
+}
+
+
+function init(){
+ c = document.getElementById('canvas').getContext('2d');
+ dolary = [];
+
+setInterval('new_dolar()', 1000);
+setInterval('draw()', 33);
+}
+
+
+</script>
+</head>
+<body onload="init()">
+    <p>Make it rain!</p>
+    <canvas id="canvas" width="600" height="300" style="border:1px solid #000000;" >
+    </canvas><br>
+    <iframe width="300" height="300" src="https://www.youtube.com/embed/nFZP8zQ5kzk?rel=0&autoplay=1"></iframe>
+</body>          
+</html>

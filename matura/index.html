@@ -1,0 +1,60 @@
+<!doctype>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css?family=Roboto|Schoolbell" rel="stylesheet">
+<style>
+	body{
+		font-size: 150px;
+		background-color: black;
+		color:white;
+		padding-top: 120px;
+		text-align: center;
+		font-family: 'Schoolbell', cursive;
+	}
+	a{
+		font-size: 150px;
+		background-color: black;
+		color:white;
+		padding-top: 120px;
+		text-align: center;
+		text-decoration: none;
+		font-family: 'Schoolbell', cursive;
+	}
+</style>
+<script type="text/javascript">
+// siemaneczko kodowe świry //
+	function onLoad(){
+
+		var date = new Date();
+		var now = date.getTime();
+
+		var maturka = new Date(2017, 4, 4, 9)
+		//console.log(maturka);
+
+		var ile = maturka - now;
+		//ile = -1;
+		var dni = Math.floor((ile)/(1000*60*60*24));
+		var xd = new Date(ile);
+		if(xd.getHours() == 0)
+		{
+		document.body.innerHTML ="Do maturki zostało:<br>"+ dni + " dni "+(xd.getHours())+"h "+xd.getMinutes() + "m " +xd.getSeconds()+"s";
+
+		}
+		else{
+		document.body.innerHTML ="Do maturki zostało:<br>"+ dni + " dni "+(xd.getHours()-1)+"h "+xd.getMinutes() + "m " +xd.getSeconds()+"s";
+	}
+
+	//ile = -1;
+	if (ile < 0)
+	{
+		//document.body.innerHTML ="xd";
+		document.body.innerHTML ="<a href='https://aplikuj.mcdonaldspraca.com.pl/?utm_source=Search&utm_medium=AdWords&utm_term=0050_001_KampaniaZatrudnieniowa&utm_content=0050_001_KampaniaZatrudnieniowa_A01&utm_campaign=0050_KampaniaZatrudnieniowa_A01'>xd</a>";
+	}
+}
+setInterval(onLoad,1000);
+</script>
+</head>
+<body onload="onLoad()">
+</body>
+</html>

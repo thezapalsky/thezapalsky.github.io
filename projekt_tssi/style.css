@@ -1,0 +1,76 @@
+body {
+	font-family:Tahoma, sans-serif;
+	font-size:70%;
+	background-color:#00684B
+	}
+h2 {
+	font-size:1.1em;
+	color:#FF6718;
+	margin-bottom:15px;
+	}
+header {
+	background-color:#007F00;
+	margin-top:10px;
+	border:5px solid #1059FF;
+	text-align:center;
+	color:#FFFF78;
+	font-size:350%;
+	font-family:Tahoma;
+	font-style:italic;
+	padding:10px;
+	}
+
+	
+	
+.calosc{width:980px;
+	margin:0 auto;
+	background-color:#007EFF}
+.menu{float:left;
+width:175px;
+margin-top:20px;
+margin-left:10px;
+}
+.strona{float:right;
+width:778px;
+padding-left:10px;
+border-left:1px solid #D70000;
+margin:10px 0;
+font-size:150%;
+background-color:#A59FFF;
+}
+.menu ul{font-size:1.2em;
+list-style-type:none;
+margin-left:0;
+padding-left:0;
+text-transform:uppercase;
+text-align:center;}
+.menu ul a:link
+{display:block;
+background-color:#DFCD00;
+padding:4px;
+border:2px outset ;
+text-decoration:none;}
+.menu ul a:hover{color:#A7FFFF;}
+dt{font-size:125%;
+	color:#CF6E00;}
+footer{clear:both;
+	text-align:left;
+	border-top:2px solid black;}
+	
+h1{
+font-size:160%;
+color:#00008B;
+text-align:center;}
+
+h3{
+color:#CD0000;
+font-size:90%}
+
+figcaption{
+font-size:100%;}
+
+p{padding:20px;}
+	
+
+
+
