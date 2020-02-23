@@ -1,6 +1,7 @@
-var audio = new Audio('https://thezapalsky.github.io/tindeck_1.mp3');
-var audio2 = new Audio('https://thezapalsky.github.io/tindeck_1.mp3/beep.mp3');
-var audio3 = new Audio('https://thezapalsky.github.io/tindeck_1.mp3/bleep.mp3');
+//var audio = new Audio('http://zapalski.cba.pl/alert.mp3');
+var audio = new Audio('http://zapalski.cba.pl/tindeck_1.mp3');
+var audio2 = new Audio('http://zapalski.cba.pl/beep.mp3');
+var audio3 = new Audio('http://zapalski.cba.pl/bleep.mp3');
 var notification_status = true;
 var square = document.createElement('div');
 
