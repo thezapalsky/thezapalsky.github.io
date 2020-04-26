@@ -14,6 +14,20 @@ square.style.top='0px'
 square.style.zIndex='100'
 document.body.appendChild(square);
 var sq1 = document.getElementById('sq1');
+sq1.style.backgroundColor='green';
+
+sq1.addEventListener('click', function (event) {
+		notification_status=!notification_status;
+		if(notification_status){
+			audio2.play();
+			sq1.style.backgroundColor='green';
+		}
+		else{
+			sq1.style.backgroundColor='red';
+			audio3.play();
+		}
+        })
+
 document.addEventListener('keypress', logKey);
 function logKey(e) {
 	if(e.keyCode == 42){
@@ -38,4 +52,4 @@ setInterval(function(){
 	console.log('monitoring...');
     }
 	
-}, 10000);
+}, 1000);
