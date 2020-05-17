@@ -47,7 +47,7 @@ function logKey(e) {
 setInterval(function(){
     if(notification_status){
  		if(document.getElementById('row0eventGrid').children[10].children[0].title == 'Open'){
-			audio.play();
+			//audio.play();
 			console.log('beep');
 			audio4.play()
         }
