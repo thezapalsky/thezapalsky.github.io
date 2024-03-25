@@ -1,144 +1,92 @@
+<!-- https://raw.githubusercontent.com/thezapalsky/thezapalsky/main/README.md -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1VY9P47E62"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-1VY9P47E62');
-</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>~ miko ~</title>
+    <link rel="icon" type="image/x-icon" href="gfx/favicon.ico"/>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).mousemove(function(){
+          var v1 = event.pageX/4;
+          var v2 = event.pageY/4;
+          var color = "rgb("+v1+","+v2+",128)";
+          $(document.body).css("background-color",color);
+          $(".xd").css("color",color);
+        });
+    
+    
+    </script> 
+    <link href="https://fonts.googleapis.com/css?family=Oswald|Roboto" rel="stylesheet">
 </head>
-<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-  <title>Zapalski Mikolaj - contact info</title>
-<link rel="icon" type="image/x-icon" href="../gfx/favicon.ico"/>
-<link href="https://fonts.googleapis.com/css?family=Oswald|Roboto" rel="stylesheet">
-<meta charset="UTF-8">
 <style type="text/css">
-  body{
-    background-color:#000000;
-    font-family: 'Roboto', sans-serif;
-
-  }
-  h1{
-    margin-top: 200px;
-    /*color: #daddad;*/
-    color:#FFFFFF;
-    font-size: 190px;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  p{
-    /*color: #ddadad;*/
-    color:#FFFFFF;
-    font-size: 50px;
-    text-align: center;
-    clear:both;
-  }
-  .xd{
-    color:#000000;
-    color:#000000;
-    text-decoration-line: none;
-  }
-  .ikonki{
-    height: 120px;
-    width: 120px;
-    padding: 40px;
-    /*background-color: yellow;*/
-    float:left;
-  }
-  .ikonki-small{
-    height: 56px;
-    width: 56px;
-    padding: 2px;
-    /*background-color: purple;*/
-    float:left;
-  }
-  #na_ikonki{
-    margin:20px auto;
-    /*background-color: red;*/
-    width: 800px;
-    height: 200px;
-  }
+    body{
+        background-color:#000000;
+        font-family: 'Roboto', sans-serif;
+        color: white;
+    }
+    a{
+        color: white;
+        text-decoration: none;
+    }
+    #markdown-content {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    h1{
+        padding: 20px;
+        font-size: 50px;
+    }
+    h3{
+        font-size: 25px;
+    }
+    img{
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+    }
+    #title{
+        padding-top:20px;
+        display: flex;
+        align-items: center;
+        height: 100px;
+    }
+    .custom-markdown-style{
+        line-height: 1.5;
+    }
 </style>
-<script type="text/javascript">
+<body>
+    <div id="markdown-content">
+        <div id="title">
+            <img src="https://avatars.githubusercontent.com/u/19775889?v=4" alt="face">
+        <h1> Zapalski Mikołaj </h1>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
 
-/*
-function onload(){
-  //jebać reklamy xd
-  document.getElementsByTagName("div")[0].style.display = "none";
-  document.getElementsByTagName("div")[1].style.display = "none";
-  document.getElementsByClassName("cbalink")[0].style.display = "none";
-  //document.getElementsByClassName("cbalink")[0].style.fontSize="0px" 
+        function fetchMarkdown(url) {
+            return fetch(url)
+                .then(response => response.text());
+        }
 
-  //
-}
-*/
+        function parseMarkdownAndApplyStyles(markdownText) {
+                var htmlContent = marked.parse(markdownText);
+                var markdownContentDiv = document.getElementById('markdown-content');
+                markdownContentDiv.innerHTML += htmlContent;
+                markdownContentDiv.classList.add('custom-markdown-style');
+        }
 
-$(document).mousemove(function(){
-  var v1 = event.pageX/4;
-  var v2 = event.pageY/4;
-  var color = "rgb("+v1+","+v2+",128)";
-  console.log("dupa");
-  $(document.body).css("background-color",color);
-  $(".xd").css("color",color);
-});
-
-</script> 
-
-<body onload="onload()">
-<h1>Zapalski Mikołaj</h1>
-<div id="na_ikonki">
-  <a href="https://thezapalsky.github.io/cv">
-    <img src='gfx/cv.png' class='ikonki'>
-  </a>
-  <a  href="https://www.linkedin.com/in/zapalski-mikolaj/">
-    <img src='gfx/linkedin2.png' class='ikonki'>
-  </a>
-  <a  href="https://github.com/thezapalsky">
-    <img src='gfx/github-sign2.png' class='ikonki'>
-  </a>
-  <a target="_top" href="mailto:zapalski.mikolaj@gmail.com">
-    <img src='gfx/email-button4.png' class='ikonki'>
-  </a>
-<!--   <a  href="https://thezapalsky.github.io/discord">
-    <img src='gfx/discord2.png' class='ikonki'>
-  </a> -->
-  <div class='ikonki'>
-    <!-- a  href="https://www.m.me/thezapalsky">
-      <img src='gfx/msger.png' class='ikonki-small'>
-    </a -->
-    <!-- <a  href="https://app.reclaim.ai/m/miko/">
-      <img src='gfx/calendar.png' class='ikonki-small'>
-    </a>
-    <a  href="https://instagram.com/thezapalsky">
-      <img src='gfx/instagram2.png' class='ikonki-small'>
-    </a>
-    <a  href="https://www.youtube.com/@TheZapalsky">
-      <img src='gfx/youtube.png' class='ikonki-small'>
-    </a>
-    <a  href="https://thezapalsky.github.io/discord">
-      <img src='gfx/discord2.png' class='ikonki-small'>
-    </a> -->
-  </div>
-</div>
-  <p class="xd">siema eniu<a class="xd" href="https://thezapalsky.github.io/links">.</a></p>
-  <!--
-<p class="xd">siema eniu XD<a class="xd" href="https://thezapalsky.github.io/links/">.</a></p>
--->
+        window.onload = function() {
+            var markdownUrl = 'https://raw.githubusercontent.com/thezapalsky/thezapalsky/main/README.md';
+            fetchMarkdown(markdownUrl)
+                .then(markdownText => {
+                    parseMarkdownAndApplyStyles(markdownText);
+                })
+                .catch(error => console.error('Error fetching Markdown:', error));
+        };
+    </script>
 </body>
 </html>
-  
-<!--
-  dzieki ziomuś za ikonki zeby nie bylo ze nie dalem creditsow
-
-<div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"          title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"          title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-
-<div>Icons made by <a href="https://www.flaticon.com/authors/dave-gandy" title="Dave Gandy">Dave Gandy</a> from <a href="https://www.flaticon.com/"           title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"          title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-
-<div>Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/"          title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"          title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-
-<div>Icons made by <a href="https://www.flaticon.com/authors/cole-bemis" title="Cole Bemis">Cole Bemis</a> from <a href="https://www.flaticon.com/"           title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/"          title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
-  -->
