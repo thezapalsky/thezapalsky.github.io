@@ -8,12 +8,22 @@
     <link rel="icon" type="image/x-icon" href="gfx/favicon.ico"/>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
+        
+        colors_allowed = true;
+        
         $(document).mousemove(function(){
-          var v1 = event.pageX/4;
-          var v2 = event.pageY/4;
-          var color = "rgb("+v1+","+v2+",128)";
-          $(document.body).css("background-color",color);
-          $(".xd").css("color",color);
+          if(colors_allowed==true){
+            var v1 = event.pageX/4;
+            var v2 = event.pageY/4;
+            var color = "rgb("+v1+","+v2+",128)";
+            $(document.body).css("background-color",color);
+            $(".xd").css("color",color);
+        }
+        });
+        
+        $(document).click(function(){
+            colors_allowed = !colors_allowed;
+            $(document.body).css("background-color","black");
         });
     
     
@@ -60,7 +70,7 @@
 <body>
     <div id="markdown-content">
         <div id="title">
-            <img src="https://avatars.githubusercontent.com/u/19775889?v=4" alt="face">
+            <img id="avatar" src="https://avatars.githubusercontent.com/u/19775889?v=4" alt="face">
         <h1> Zapalski Mikołaj </h1>
         </div>
     </div>
