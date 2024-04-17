@@ -7,27 +7,6 @@
     <title>~ miko ~</title>
     <link rel="icon" type="image/x-icon" href="gfx/favicon.ico"/>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript">
-        
-        colors_allowed = false;
-        
-        $(document).mousemove(function(){
-          if(colors_allowed==true){
-            var v1 = event.pageX/4;
-            var v2 = event.pageY/4;
-            var color = "rgb("+v1+","+v2+",128)";
-            $(document.body).css("background-color",color);
-            $(".xd").css("color",color);
-        }
-        });
-        
-        $(document).click(function(){
-            colors_allowed = !colors_allowed;
-            $(document.body).css("background-color","black");
-        });
-    
-    
-    </script> 
     <link href="https://fonts.googleapis.com/css?family=Oswald|Roboto" rel="stylesheet">
 </head>
 <style type="text/css">
@@ -40,7 +19,7 @@
         color: white;
         text-decoration: none;
     }
-    #markdown-content {
+    #all-content{
         max-width: 600px;
         margin: 0 auto;
         padding: 20px;
@@ -68,10 +47,12 @@
     }
 </style>
 <body>
-    <div id="markdown-content">
+    <div id="all-content">
         <div id="title">
             <img id="avatar" src="https://avatars.githubusercontent.com/u/19775889?v=4" alt="face">
         <h1> Zapalski Mikołaj </h1>
+        </div>
+        <div id="markdown-content">
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -87,6 +68,8 @@
                 var markdownContentDiv = document.getElementById('markdown-content');
                 markdownContentDiv.innerHTML += htmlContent;
                 markdownContentDiv.classList.add('custom-markdown-style');
+
+                markdownContentDiv.innerHTML += "<br><hr style='height:2px;border-width:0;color:white;background-color:white'><i><center>tip: you can click on my face to toogle the rainbow effect :)</i></center>";
         }
 
         window.onload = function() {
@@ -96,6 +79,27 @@
                     parseMarkdownAndApplyStyles(markdownText);
                 })
                 .catch(error => console.error('Error fetching Markdown:', error));
+
+            var colors_allowed = localStorage.getItem("colorToggleState") === "true" || false;
+            
+            $(document).mousemove(function(){
+                if(colors_allowed==true){
+                    var v1 = event.pageX/4;
+                    var v2 = event.pageY/4;
+                    var color = "rgb("+v1+","+v2+",128)";
+                    $(document.body).css("background-color",color);
+                    $(".xd").css("color",color);
+                }
+                });
+            
+            $("#avatar").click(function(){ 
+                colors_allowed = !colors_allowed;
+                localStorage.setItem("colorToggleState", colors_allowed);
+                
+                if(colors_allowed!=true){
+                    $(document.body).css("background-color","black");
+                }
+            });
         };
     </script>
 </body>
