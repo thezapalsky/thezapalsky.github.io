@@ -49,7 +49,8 @@
 <body>
     <div id="all-content">
         <div id="title">
-            <img id="avatar" src="https://avatars.githubusercontent.com/u/19775889?v=4" alt="face">
+            <!-- <img id="avatar" src="https://avatars.githubusercontent.com/u/19775889?v=4" alt="face"> -->
+            <img id="avatar" src="https://media.licdn.com/dms/image/v2/D4D03AQHRGktBv_nkAQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1710844142888?e=1735171200&v=beta&t=pHp0RC_gSI2Uqp6jt_kH02llKSQOHww-_q0rC7mUVm0" alt="face">
         <h1> Zapalski Mikołaj </h1>
         </div>
         <div id="markdown-content">
@@ -96,8 +97,13 @@
                 colors_allowed = !colors_allowed;
                 localStorage.setItem("colorToggleState", colors_allowed);
                 
+                
                 if(colors_allowed!=true){
                     $(document.body).css("background-color","black");
+                    $("#avatar").attr("src", "https://media.licdn.com/dms/image/v2/D4D03AQHRGktBv_nkAQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1710844142888?e=1735171200&v=beta&t=pHp0RC_gSI2Uqp6jt_kH02llKSQOHww-_q0rC7mUVm0");
+                }
+                else{
+                    $("#avatar").attr("src", "https://avatars.githubusercontent.com/u/19775889?v=4");
                 }
             });
         };
