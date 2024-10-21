@@ -45,12 +45,26 @@
     .custom-markdown-style{
         line-height: 1.5;
     }
+
+    @keyframes shrink {
+        0% { transform: scale(1); opacity: 1; }
+        50% { transform: scale(0.1); opacity: 0.8; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    .shrinking {
+        animation: shrink 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    }
+
+    #avatar {
+        transition: all 0.3s ease;
+    }
 </style>
 <body>
     <div id="all-content">
         <div id="title">
             <!-- <img id="avatar" src="https://avatars.githubusercontent.com/u/19775889?v=4" alt="face"> -->
-            <img id="avatar" src="https://media.licdn.com/dms/image/v2/D4D03AQHRGktBv_nkAQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1710844142888?e=1735171200&v=beta&t=pHp0RC_gSI2Uqp6jt_kH02llKSQOHww-_q0rC7mUVm0" alt="face">
+            <img id="avatar" src="https://media.licdn.com/dms/image/v2/D4D03AQHRGktBv_nkAQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1710844142888?e=1735171200&v=beta&t=pHp0RC_gSI2Uqp6jt_kH02llKSQOHww-_q0rC7mUVm0" alt="face" draggable="false">
         <h1> Zapalski Mikołaj </h1>
         </div>
         <div id="markdown-content">
@@ -73,15 +87,34 @@
                 markdownContentDiv.innerHTML += "<br><hr style='height:2px;border-width:0;color:white;background-color:white'><i><center>tip: you can click on my face to toggle the rainbow effect :)</i></center>";
         }
 
-        function toggleColorAndAvatar(colors_allowed) {
-            if(colors_allowed!=true){
-                $(document.body).css("background-color","black");
-                $("#avatar").attr("src", "https://media.licdn.com/dms/image/v2/D4D03AQHRGktBv_nkAQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1710844142888?e=1735171200&v=beta&t=pHp0RC_gSI2Uqp6jt_kH02llKSQOHww-_q0rC7mUVm0");
+        function toggleColorAndAvatar(colors_allowed, animate=true) {
+            if(animate==false){
+                if(colors_allowed!=true){
+                    $(document.body).css("background-color","black");
+                    $("#avatar").attr("src", "https://media.licdn.com/dms/image/v2/D4D03AQHRGktBv_nkAQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1710844142888?e=1735171200&v=beta&t=pHp0RC_gSI2Uqp6jt_kH02llKSQOHww-_q0rC7mUVm0");
+                }
+                else{
+                    $("#avatar").attr("src", "https://avatars.githubusercontent.com/u/19775889?v=4");
+                }
+                return;
             }
             else{
-                $("#avatar").attr("src", "https://avatars.githubusercontent.com/u/19775889?v=4");
+                $("#avatar").addClass("shrinking");
+                setTimeout(() => {
+                    if(colors_allowed!=true){
+                        $(document.body).css("background-color","black");
+                        $("#avatar").attr("src", "https://media.licdn.com/dms/image/v2/D4D03AQHRGktBv_nkAQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1710844142888?e=1735171200&v=beta&t=pHp0RC_gSI2Uqp6jt_kH02llKSQOHww-_q0rC7mUVm0");
+                    }
+                    else{
+                        $("#avatar").attr("src", "https://avatars.githubusercontent.com/u/19775889?v=4");
+                    }
+                }, 250);
+                setTimeout(() => {
+                    $("#avatar").removeClass("shrinking");
+                }, 500);
             }
         }
+
 
         window.onload = function() {
             var markdownUrl = 'https://raw.githubusercontent.com/thezapalsky/thezapalsky/main/README.md';
@@ -92,7 +125,7 @@
                 .catch(error => console.error('Error fetching Markdown:', error));
 
             var colors_allowed = localStorage.getItem("colorToggleState") === "true" || false;
-            toggleColorAndAvatar(colors_allowed);
+            toggleColorAndAvatar(colors_allowed, animate=false);
             
             $(document).mousemove(function(){
                 if(colors_allowed==true){
@@ -102,13 +135,20 @@
                     $(document.body).css("background-color",color);
                     $(".xd").css("color",color);
                 }
-                });
+            });
             
+            let isAnimating = false;
             $("#avatar").click(function(){ 
+            if(!isAnimating) {
+                isAnimating = true;
                 colors_allowed = !colors_allowed;
                 localStorage.setItem("colorToggleState", colors_allowed);
                 toggleColorAndAvatar(colors_allowed);
-            });            
+                setTimeout(() => {
+                    isAnimating = false;
+                }, 400);
+                }
+            });     
         };
     </script>
 </body>
