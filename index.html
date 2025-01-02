@@ -1,55 +1,74 @@
 <!-- https://raw.githubusercontent.com/thezapalsky/thezapalsky/main/README.md -->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>~ miko ~</title>
-    <link rel="icon" type="image/x-icon" href="gfx/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="gfx/favicon.ico" />
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Oswald|Roboto" rel="stylesheet">
 </head>
 <style type="text/css">
-    body{
-        background-color:#000000;
+    body {
+        background-color: #000000;
         font-family: 'Roboto', sans-serif;
         color: white;
     }
-    a{
+
+    a {
         color: white;
         text-decoration: none;
     }
-    #all-content{
+
+    #all-content {
         max-width: 600px;
         margin: 0 auto;
         padding: 20px;
     }
-    h1{
+
+    h1 {
         padding: 20px;
         font-size: 50px;
     }
-    h3{
+
+    h3 {
         font-size: 25px;
     }
-    img{
+
+    img {
         border-radius: 50%;
         width: 100px;
         height: 100px;
     }
-    #title{
-        padding-top:20px;
+
+    #title {
+        padding-top: 20px;
         display: flex;
         align-items: center;
         height: 100px;
     }
-    .custom-markdown-style{
+
+    .custom-markdown-style {
         line-height: 1.5;
     }
 
     @keyframes shrink {
-        0% { transform: scale(1); opacity: 1; }
-        50% { transform: scale(0.1); opacity: 0.8; }
-        100% { transform: scale(1); opacity: 1; }
+        0% {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        50% {
+            transform: scale(0.1);
+            opacity: 0.8;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
     }
 
     .shrinking {
@@ -60,12 +79,13 @@
         transition: all 0.3s ease;
     }
 </style>
+
 <body>
     <div id="all-content">
         <div id="title">
             <!-- <img id="avatar" src="https://avatars.githubusercontent.com/u/19775889?v=4" alt="face"> -->
-            <img id="avatar" src="https://media.licdn.com/dms/image/v2/D4D03AQHRGktBv_nkAQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1710844142888?e=1735171200&v=beta&t=pHp0RC_gSI2Uqp6jt_kH02llKSQOHww-_q0rC7mUVm0" alt="face" draggable="false">
-        <h1> Zapalski Mikołaj </h1>
+            <img id="avatar" src="gfx/ice_cropped.jpeg" alt="face" draggable="false">
+            <h1> Zapalski Mikołaj </h1>
         </div>
         <div id="markdown-content">
         </div>
@@ -79,33 +99,33 @@
         }
 
         function parseMarkdownAndApplyStyles(markdownText) {
-                var htmlContent = marked.parse(markdownText);
-                var markdownContentDiv = document.getElementById('markdown-content');
-                markdownContentDiv.innerHTML += htmlContent;
-                markdownContentDiv.classList.add('custom-markdown-style');
+            var htmlContent = marked.parse(markdownText);
+            var markdownContentDiv = document.getElementById('markdown-content');
+            markdownContentDiv.innerHTML += htmlContent;
+            markdownContentDiv.classList.add('custom-markdown-style');
 
-                markdownContentDiv.innerHTML += "<br><hr style='height:2px;border-width:0;color:white;background-color:white'><i><center>tip: you can click on my face to toggle the rainbow effect :)</i></center>";
+            markdownContentDiv.innerHTML += "<br><hr style='height:2px;border-width:0;color:white;background-color:white'><i><center>tip: you can click on my face to toggle the rainbow effect :)</i></center>";
         }
 
-        function toggleColorAndAvatar(colors_allowed, animate=true) {
-            if(animate==false){
-                if(colors_allowed!=true){
-                    $(document.body).css("background-color","black");
-                    $("#avatar").attr("src", "https://media.licdn.com/dms/image/v2/D4D03AQHRGktBv_nkAQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1710844142888?e=1735171200&v=beta&t=pHp0RC_gSI2Uqp6jt_kH02llKSQOHww-_q0rC7mUVm0");
+        function toggleColorAndAvatar(colors_allowed, animate = true) {
+            if (animate == false) {
+                if (colors_allowed != true) {
+                    $(document.body).css("background-color", "black");
+                    $("#avatar").attr("src", "gfx/ice_cropped.jpeg");
                 }
-                else{
+                else {
                     $("#avatar").attr("src", "https://avatars.githubusercontent.com/u/19775889?v=4");
                 }
                 return;
             }
-            else{
+            else {
                 $("#avatar").addClass("shrinking");
                 setTimeout(() => {
-                    if(colors_allowed!=true){
-                        $(document.body).css("background-color","black");
-                        $("#avatar").attr("src", "https://media.licdn.com/dms/image/v2/D4D03AQHRGktBv_nkAQ/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1710844142888?e=1735171200&v=beta&t=pHp0RC_gSI2Uqp6jt_kH02llKSQOHww-_q0rC7mUVm0");
+                    if (colors_allowed != true) {
+                        $(document.body).css("background-color", "black");
+                        $("#avatar").attr("src", "gfx/ice_cropped.jpeg");
                     }
-                    else{
+                    else {
                         $("#avatar").attr("src", "https://avatars.githubusercontent.com/u/19775889?v=4");
                     }
                 }, 250);
@@ -116,7 +136,7 @@
         }
 
 
-        window.onload = function() {
+        window.onload = function () {
             var markdownUrl = 'https://raw.githubusercontent.com/thezapalsky/thezapalsky/main/README.md';
             fetchMarkdown(markdownUrl)
                 .then(markdownText => {
@@ -125,31 +145,32 @@
                 .catch(error => console.error('Error fetching Markdown:', error));
 
             var colors_allowed = localStorage.getItem("colorToggleState") === "true" || false;
-            toggleColorAndAvatar(colors_allowed, animate=false);
-            
-            $(document).mousemove(function(){
-                if(colors_allowed==true){
-                    var v1 = event.pageX/4;
-                    var v2 = event.pageY/4;
-                    var color = "rgb("+v1+","+v2+",128)";
-                    $(document.body).css("background-color",color);
-                    $(".xd").css("color",color);
+            toggleColorAndAvatar(colors_allowed, animate = false);
+
+            $(document).mousemove(function () {
+                if (colors_allowed == true) {
+                    var v1 = event.pageX / 4;
+                    var v2 = event.pageY / 4;
+                    var color = "rgb(" + v1 + "," + v2 + ",128)";
+                    $(document.body).css("background-color", color);
+                    $(".xd").css("color", color);
                 }
             });
-            
+
             let isAnimating = false;
-            $("#avatar").click(function(){ 
-            if(!isAnimating) {
-                isAnimating = true;
-                colors_allowed = !colors_allowed;
-                localStorage.setItem("colorToggleState", colors_allowed);
-                toggleColorAndAvatar(colors_allowed);
-                setTimeout(() => {
-                    isAnimating = false;
-                }, 400);
+            $("#avatar").click(function () {
+                if (!isAnimating) {
+                    isAnimating = true;
+                    colors_allowed = !colors_allowed;
+                    localStorage.setItem("colorToggleState", colors_allowed);
+                    toggleColorAndAvatar(colors_allowed);
+                    setTimeout(() => {
+                        isAnimating = false;
+                    }, 400);
                 }
-            });     
+            });
         };
     </script>
 </body>
+
 </html>
