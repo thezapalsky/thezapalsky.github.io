@@ -14,112 +14,14 @@
     <meta name="keywords" content="Mikołaj Zapalski, developer">
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&display=swap"
         as="style">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="scripts.js"></script>
 </head>
-<style type="text/css">
-    /* Consider moving styles to separate file */
-
-    /* Add CSS variables for maintainability */
-    :root {
-        --text-color: white;
-        --bg-color: #000000;
-        --link-underline: rgba(255, 255, 255, 0.15);
-        --link-underline-hover: rgba(255, 255, 255, 0.4);
-    }
-
-    /* Use the variables */
-    body {
-        background-color: var(--bg-color);
-        font-family: 'Source Serif Pro', serif;
-        color: var(--text-color);
-    }
-
-    a {
-        color: white;
-        text-decoration: none;
-        border-bottom: 0.5px solid rgba(255, 255, 255, 0.15);
-        transition: border-bottom-color 0.2s ease;
-    }
-
-    a:hover {
-        border-bottom-color: rgba(255, 255, 255, 0.4);
-    }
-
-    #all-content {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 20px;
-    }
-
-    h1 {
-        padding: 20px;
-        font-size: 50px;
-        font-weight: 600;
-    }
-
-    h3 {
-        font-size: 25px;
-        font-weight: 500;
-        margin: 8px 0;
-    }
-
-    img {
-        border-radius: 50%;
-        width: 100px;
-        height: 100px;
-    }
-
-    #title {
-        padding-top: 20px;
-        display: flex;
-        align-items: center;
-        height: 100px;
-    }
-
-    .custom-markdown-style {
-        line-height: 1.5;
-    }
-
-    @keyframes shrink {
-        0% {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        50% {
-            transform: scale(0.1);
-            opacity: 0.8;
-        }
-
-        100% {
-            transform: scale(1);
-            opacity: 1;
-        }
-    }
-
-    .shrinking {
-        animation: shrink 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-    }
-
-    #avatar {
-        transition: all 0.3s ease;
-    }
-
-    hr {
-        margin: 0;
-        height: 1px;
-        border: none;
-        background-color: rgba(255, 255, 255, 0.2);
-    }
-
-    #markdown-content {
-        margin-top: 40px;
-    }
-</style>
 
 <body>
     <div id="all-content">
         <div id="title">
-            <!-- <img id="avatar" src="https://avatars.githubusercontent.com/u/19775889?v=4" alt="face"> -->
             <img id="avatar" src="gfx/ice_cropped.jpeg" alt="Mikołaj Zapalski's profile picture" draggable="false"
                 loading="lazy" aria-label="Profile picture that toggles rainbow effect when clicked">
             <h1> Zapalski Mikołaj </h1>
@@ -127,96 +29,6 @@
         <div id="markdown-content">
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script>
-
-        function fetchMarkdown(url) {
-            return fetch(url)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                })
-                .catch(error => {
-                    console.error('Error fetching markdown:', error);
-                    return 'Failed to load content. Please try again later.';
-                });
-        }
-
-        function parseMarkdownAndApplyStyles(markdownText) {
-            var htmlContent = marked.parse(markdownText);
-            var markdownContentDiv = document.getElementById('markdown-content');
-            htmlContent = htmlContent.replace(/<\/h[23]>/g, '$&<hr>');
-
-            markdownContentDiv.innerHTML += htmlContent;
-            markdownContentDiv.classList.add('custom-markdown-style');
-
-            markdownContentDiv.innerHTML += "<br><i><center>tip: you can click on my face to toggle the rainbow effect :)</i></center>";
-        }
-
-        function toggleColorAndAvatar(colors_allowed, animate = true) {
-            const avatar = $("#avatar");
-            const body = $(document.body);
-
-            if (!animate) {
-                updateAppearance(colors_allowed);
-                return;
-            }
-
-            avatar.addClass("shrinking");
-            setTimeout(() => {
-                updateAppearance(colors_allowed);
-            }, 250);
-            setTimeout(() => {
-                avatar.removeClass("shrinking");
-            }, 500);
-
-            function updateAppearance(allowed) {
-                body.css("background-color", allowed ? "black" : "black");
-                avatar.attr("src", allowed
-                    ? "https://avatars.githubusercontent.com/u/19775889?v=4"
-                    : "gfx/ice_cropped.jpeg"
-                );
-            }
-        }
-
-
-        window.onload = function () {
-            var markdownUrl = 'https://raw.githubusercontent.com/thezapalsky/thezapalsky/main/README.md';
-            fetchMarkdown(markdownUrl)
-                .then(markdownText => {
-                    parseMarkdownAndApplyStyles(markdownText);
-                })
-                .catch(error => console.error('Error fetching Markdown:', error));
-
-            var colors_allowed = localStorage.getItem("colorToggleState") === "true" || false;
-            toggleColorAndAvatar(colors_allowed, animate = false);
-
-            $(document).mousemove(function () {
-                if (colors_allowed == true) {
-                    var v1 = event.pageX / 4;
-                    var v2 = event.pageY / 4;
-                    var color = "rgb(" + v1 + "," + v2 + ",128)";
-                    $(document.body).css("background-color", color);
-                    $(".xd").css("color", color);
-                }
-            });
-
-            let isAnimating = false;
-            $("#avatar").click(function () {
-                if (!isAnimating) {
-                    isAnimating = true;
-                    colors_allowed = !colors_allowed;
-                    localStorage.setItem("colorToggleState", colors_allowed);
-                    toggleColorAndAvatar(colors_allowed);
-                    setTimeout(() => {
-                        isAnimating = false;
-                    }, 400);
-                }
-            });
-        };
-    </script>
 </body>
 
 </html>
