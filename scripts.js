@@ -94,4 +94,34 @@ window.onload = function () {
             }, 400);
         }
     });
-}; 
+};
+
+// Konami code easter egg
+const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+let konamiIndex = 0;
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === konamiCode[konamiIndex]) {
+        konamiIndex++;
+        if (konamiIndex === konamiCode.length) {
+            document.body.style.transform = 'rotate(180deg)';
+            document.body.style.transition = 'transform 1s ease';
+            setTimeout(() => {
+                document.body.style.transform = 'rotate(0deg)';
+            }, 1000);
+            konamiIndex = 0;
+        }
+    } else {
+        konamiIndex = 0;
+    }
+});
+
+// Console messages
+console.log(
+    "%c👋 Hello curious developer!", 
+    "font-size: 20px; font-weight: bold; color: #ff69b4;"
+);
+console.log(
+    "%cRemember the Konami code? ⬆️⬆️⬇️⬇️⬅️➡️⬅️➡️🅱️🅰️", 
+    "font-style: italic; color: #4CAF50"
+); 
