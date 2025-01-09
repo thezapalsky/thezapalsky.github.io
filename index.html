@@ -8,12 +8,13 @@
     <title>~ miko ~</title>
     <link rel="icon" type="image/x-icon" href="gfx/favicon.ico" />
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
-    <link href="https://fonts.googleapis.com/css?family=Oswald|Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:wght@400;600;700&display=swap"
+        rel="stylesheet">
 </head>
 <style type="text/css">
     body {
         background-color: #000000;
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Source Serif Pro', serif;
         color: white;
     }
 
@@ -31,10 +32,13 @@
     h1 {
         padding: 20px;
         font-size: 50px;
+        font-weight: 600;
     }
 
     h3 {
         font-size: 25px;
+        font-weight: 500;
+        margin: 8px 0;
     }
 
     img {
@@ -78,6 +82,17 @@
     #avatar {
         transition: all 0.3s ease;
     }
+
+    hr {
+        margin: 0;
+        height: 1px;
+        border: none;
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    #markdown-content {
+        margin-top: 40px;
+    }
 </style>
 
 <body>
@@ -101,10 +116,12 @@
         function parseMarkdownAndApplyStyles(markdownText) {
             var htmlContent = marked.parse(markdownText);
             var markdownContentDiv = document.getElementById('markdown-content');
+            htmlContent = htmlContent.replace(/<\/h[23]>/g, '$&<hr>');
+
             markdownContentDiv.innerHTML += htmlContent;
             markdownContentDiv.classList.add('custom-markdown-style');
 
-            markdownContentDiv.innerHTML += "<br><hr style='height:2px;border-width:0;color:white;background-color:white'><i><center>tip: you can click on my face to toggle the rainbow effect :)</i></center>";
+            markdownContentDiv.innerHTML += "<br><i><center>tip: you can click on my face to toggle the rainbow effect :)</i></center>";
         }
 
         function toggleColorAndAvatar(colors_allowed, animate = true) {
