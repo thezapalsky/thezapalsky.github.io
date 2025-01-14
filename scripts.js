@@ -23,6 +23,11 @@ function parseMarkdownAndApplyStyles(markdownText) {
     markdownContentDiv.innerHTML += "<br><i><center>tip: you can click on my face to toggle the rainbow effect :)</i></center>";
 }
 
+const preloadedImages = {
+    github: new Image(),
+    local: new Image()
+};
+
 function toggleColorAndAvatar(colors_allowed, animate = true) {
     const avatar = $("#avatar");
     const body = $(document.body);
@@ -42,10 +47,7 @@ function toggleColorAndAvatar(colors_allowed, animate = true) {
 
     function updateAppearance(allowed) {
         body.css("background-color", allowed ? "black" : "black");
-        avatar.attr("src", allowed
-            ? "https://avatars.githubusercontent.com/u/19775889?v=4"
-            : "gfx/ice_cropped.jpeg"
-        );
+        avatar.attr("src", allowed ? preloadedImages.github.src : preloadedImages.local.src);
     }
 }
 
@@ -61,6 +63,9 @@ function throttle(func, limit) {
 }
 
 window.onload = function () {
+    preloadedImages.github.src = "https://avatars.githubusercontent.com/u/19775889?v=4";
+    preloadedImages.local.src = "gfx/ice_cropped.jpeg";
+
     var markdownUrl = 'https://raw.githubusercontent.com/thezapalsky/thezapalsky/main/README.md';
     fetchMarkdown(markdownUrl)
         .then(markdownText => {
