@@ -1,3 +1,14 @@
+function setDevelopmentFavicon() {
+    if (window.location.hostname === 'localhost' || 
+        window.location.hostname === '127.0.0.1' ||
+        window.location.protocol === 'file:') {
+        const favicon = document.querySelector('link[rel="icon"]');
+        if (favicon) {
+            favicon.href = 'https://img.icons8.com/windows/32/dev.png';
+        }
+    }
+}
+
 function fetchMarkdown(url) {
     return fetch(url)
         .then(response => {
@@ -63,6 +74,8 @@ function throttle(func, limit) {
 }
 
 window.onload = function () {
+    setDevelopmentFavicon();
+    
     preloadedImages.github.src = "https://avatars.githubusercontent.com/u/19775889?v=4";
     preloadedImages.local.src = "gfx/ice_cropped.jpeg";
 
