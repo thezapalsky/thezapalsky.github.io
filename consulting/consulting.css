@@ -1,0 +1,276 @@
+/* Consulting page specific styles */
+:root {
+    --accent-color: rgba(255, 255, 255, 0.8);
+    --section-spacing: 40px;
+    --item-spacing: 25px;
+    --testimonial-bg: rgba(255, 255, 255, 0.05);
+    --testimonial-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Override main styles for wider content */
+#all-content {
+    max-width: 600px;
+}
+
+#consulting-content {
+    margin-top: 40px;
+    line-height: 1.6;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.intro {
+    font-size: 1.1em;
+    margin-bottom: var(--section-spacing);
+}
+
+h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 30px 0 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding-bottom: 8px;
+}
+
+/* Specific adjustment for What I Offer section */
+h2 + p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.services {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.service-item h3 {
+    margin-bottom: 5px;
+    color: var(--accent-color);
+}
+
+.service-item p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.service-item {
+    padding: 3px;
+}
+
+.experience-list {
+    padding-left: 20px;
+    margin-bottom: var(--section-spacing);
+}
+
+.experience-list li {
+    margin-bottom: 12px;
+}
+
+.projects {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: var(--section-spacing);
+}
+
+.project-item h3 {
+    margin-bottom: 5px;
+}
+
+.project-item p {
+    margin-top: 0;
+}
+
+.contact-section {
+    margin-top: var(--section-spacing);
+    margin-bottom: var(--section-spacing);
+}
+
+.contact-info {
+    margin-top: 20px;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+    margin-top: 15px;
+}
+
+.social-links p {
+    margin: 0;
+}
+
+/* Projects & Testimonials section */
+.projects-testimonials {
+    margin-bottom: var(--section-spacing);
+}
+
+.project-showcase {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.project-info {
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.03);
+    padding: 20px;
+    border-radius: 4px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-info:hover {
+    transform: translateY(-3px);
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+.project-info h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: var(--accent-color);
+}
+
+.project-info p {
+    margin-bottom: 0;
+    flex-grow: 1;
+}
+
+/* Testimonials styling */
+.testimonials-section {
+    margin-top: 40px;
+    clear: both;
+}
+
+.testimonials-section h3 {
+    font-size: 22px;
+    margin-bottom: 15px;
+    color: var(--accent-color);
+}
+
+.testimonials {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.testimonial {
+    background-color: var(--testimonial-bg);
+    border-left: 3px solid var(--testimonial-border);
+    padding: 15px 20px;
+    border-radius: 0 4px 4px 0;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.testimonial:hover {
+    transform: translateX(3px);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.testimonial blockquote {
+    margin: 0;
+    padding: 0;
+}
+
+.testimonial p {
+    font-style: italic;
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.testimonial p:last-of-type {
+    margin-bottom: 15px;
+}
+
+.testimonial cite {
+    display: block;
+    text-align: right;
+    font-style: normal;
+    font-weight: 600;
+    color: var(--accent-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .project-showcase {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .project-info {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 600px) {
+    #title {
+        flex-direction: column;
+        height: auto;
+        text-align: center;
+    }
+    
+    h1 {
+        font-size: 36px;
+        padding: 10px;
+    }
+    
+    .social-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .testimonial {
+        padding: 12px 15px;
+    }
+    
+    .testimonial p {
+        font-size: 0.95em;
+    }
+}
+
+/* Subtle hover effects */
+.service-item, .project-item {
+    transition: transform 0.2s ease;
+    padding: 5px;
+}
+
+.service-item:hover, .project-item:hover {
+    transform: translateX(3px);
+}
+
+/* Link styling specific to consulting page */
+#consulting-content a {
+    border-bottom: 1px solid var(--link-underline);
+    padding-bottom: 1px;
+    transition: border-bottom-color 0.2s ease, color 0.2s ease;
+}
+
+#consulting-content a:hover {
+    border-bottom-color: var(--link-underline-hover);
+    color: var(--accent-color);
+}
+
+/* Remove hover effects on avatar */
+#title a {
+    border-bottom: none;
+    transition: none;
+}
+
+#title a:hover {
+    border-bottom: none;
+    transform: none;
+}
+
+#title a:hover #avatar {
+    transform: none;
+    opacity: 1;
+    border-bottom: none;
+}
+
+#title #avatar {
+    transition: none;
+} 
