@@ -39,14 +39,14 @@ function parseMarkdownAndApplyStyles(markdownText) {
   const links = document.querySelectorAll("a");
   links.forEach((link) => {
     link.addEventListener("click", (event) => {
-      if (link.textContent.toLowerCase().includes("website")) {
-        event.preventDefault();
-        link.href = "#";
-        showPopup(event.pageX, event.pageY);
-      } else if (link.href.startsWith("mailto:")) {
-        event.preventDefault();
-        const email = link.href.replace("mailto:", "");
-        showEmailPopup(event.pageX, event.pageY, email);
+        if (link.textContent.toLowerCase().includes("website")) {
+          event.preventDefault();
+          link.href = "#";
+          showPopup(event.clientX, event.clientY);
+        } else if (link.href.startsWith("mailto:")) {
+          event.preventDefault();
+          const email = link.href.replace("mailto:", "");
+          showEmailPopup(event.clientX, event.clientY, email);
       }
     });
   });
@@ -185,7 +185,7 @@ window.onload = function () {
 
   var colors_allowed =
     localStorage.getItem("colorToggleState") === "true" || false;
-  toggleColorAndAvatar(colors_allowed, (animate = false));
+  toggleColorAndAvatar(colors_allowed, false);
 
   const handleMouseMove = throttle(function (event) {
     if (colors_allowed) {
