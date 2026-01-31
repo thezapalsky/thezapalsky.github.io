@@ -1,0 +1,9 @@
+# thezapalsky
+
+> Personal website; profile content is loaded via client-side JavaScript.
+
+For the full, authoritative profile and bio, use the GitHub README.
+
+## Profile
+
+- [GitHub README](https://raw.githubusercontent.com/thezapalsky/thezapalsky/refs/heads/main/README.md): Primary source of profile information.
